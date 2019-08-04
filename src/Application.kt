@@ -1,9 +1,11 @@
 package cz.jtalas
 
-import cz.jtalas.model.User
 import io.ktor.application.Application
 import io.ktor.application.call
+import io.ktor.application.log
 import io.ktor.http.ContentType
+import io.ktor.http.content.files
+import io.ktor.http.content.static
 import io.ktor.response.respondText
 import io.ktor.routing.Routing
 import io.ktor.routing.get
@@ -13,9 +15,10 @@ import kotlinx.serialization.json.JsonConfiguration
 
 fun Application.module() {
     routing {
+        //trace { application.log.trace(it.buildText()) }
         htmlRoute()
-        testJson()
         backendRoutes()
+        adminUiRoute()
     }
 }
 
@@ -38,9 +41,8 @@ fun Routing.htmlRoute() {
     }
 }
 
-fun Routing.testJson() {
-    get("/json") {
-        val json = json.stringify(User.serializer(), User("Jo", "No"))
-        call.respondText(json)
+fun Routing.adminUiRoute() {
+    static("") {
+        files("admin-ui/build")
     }
 }
