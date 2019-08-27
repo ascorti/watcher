@@ -5,5 +5,5 @@
 *.iml
 *.ipr
 *.iws
-gradlew
-gradlew.bat
+/gradlew
+/gradlew.bat
